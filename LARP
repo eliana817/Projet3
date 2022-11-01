@@ -1,0 +1,45 @@
+\\ Main module
+
+DEBUT
+
+ECRIRE "Entrez votre nom"
+LIRE nom
+
+ECRIRE ""
+
+ECRIRE  "Entrez Pierre, Feuille ou Ciseaux :"
+LIRE valeurJoueur
+
+TANT QUE valeurJoueur != "Pierre" ET valeurJoueur != "Ciseaux" ET valeurJoueur != "Feuille" FAIRE
+    ECRIRE ""
+    ECRIRE "Soyez sûre d’avoir bien entré une des valeurs suivantes : Pierre, Feuille ou Ciseaux :"
+    LIRE valeurJoueur
+FINTANTQUE
+
+ECRIRE ""
+
+ECRIRE valeurJoueur, "contre…"
+liste <- ["Pierre", "Feuille", "Ciseaux"]
+index <- ALEA(1,3)
+valeurOrdi <- liste[index]
+ECRIRE valeurOrdi
+
+ECRIRE ""
+
+SI valeurJoueur = “Pierre" ET valeurOrdi = "Ciseaux" ALORS
+    ECRIRE "Le gagnant est”, nom
+SINON SI valeurJoueur = "Pierre" ET valeurOrdi = "Papier" ALORS
+    ECRIRE "Vous avez perdu!"
+SINON SI valeurJoueur = "Papier" ET valeurOrdi = "Pierre" ALORS
+    ECRIRE "Le gagnant est", nom
+SINON SI valeurJoueur = "Papier" ET valeurOrdi = "Ciseaux" ALORS
+    ECRIRE "Vous avez perdu!"
+SINON SI valeurJoueur = "Ciseaux" ET valeurOrdi = "Pierre" ALORS
+    ECRIRE "Vous avez perdu!"
+SINON SI valeurJoueur = "Ciseaux" ET valeurOrdi = "Papier" ALORS
+    ECRIRE "Le gagnant est ", nom
+SINON
+    ECRIRE "Il y a égalité!"
+FINSI
+
+FIN
