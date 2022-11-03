@@ -1,3 +1,4 @@
+
 \\ Main module
 
 DEBUT
@@ -10,7 +11,7 @@ ECRIRE ""
 ECRIRE  "Entrez Pierre, Feuille ou Ciseaux :"
 LIRE valeurJoueur
 
-TANT QUE valeurJoueur != "Pierre" ET valeurJoueur != "Ciseaux" ET valeurJoueur != "Feuille" FAIRE
+TANTQUE valeurJoueur != "Pierre" ET valeurJoueur != "Ciseaux" ET valeurJoueur != "Feuille" FAIRE
     ECRIRE ""
     ECRIRE "Soyez sûre d’avoir bien entré une des valeurs suivantes : Pierre, Feuille ou Ciseaux :"
     LIRE valeurJoueur
@@ -26,20 +27,21 @@ ECRIRE valeurOrdi
 
 ECRIRE ""
 
-SI valeurJoueur = “Pierre" ET valeurOrdi = "Ciseaux" ALORS
-    ECRIRE "Le gagnant est”, nom
-SINON SI valeurJoueur = "Pierre" ET valeurOrdi = "Papier" ALORS
-    ECRIRE "Vous avez perdu!"
-SINON SI valeurJoueur = "Papier" ET valeurOrdi = "Pierre" ALORS
+SI valeurJoueur = "Pierre" ET valeurOrdi = "Ciseaux" ALORS
     ECRIRE "Le gagnant est", nom
-SINON SI valeurJoueur = "Papier" ET valeurOrdi = "Ciseaux" ALORS
+SINON SI valeurJoueur = "Pierre" ET valeurOrdi = "Feuille" ALORS
+    ECRIRE "Vous avez perdu!"
+SINON SI valeurJoueur = "Feuille" ET valeurOrdi = "Pierre" ALORS
+    ECRIRE "Le gagnant est", nom
+SINON SI valeurJoueur = "Feuille" ET valeurOrdi = "Ciseaux" ALORS
     ECRIRE "Vous avez perdu!"
 SINON SI valeurJoueur = "Ciseaux" ET valeurOrdi = "Pierre" ALORS
     ECRIRE "Vous avez perdu!"
-SINON SI valeurJoueur = "Ciseaux" ET valeurOrdi = "Papier" ALORS
+SINON SI valeurJoueur = "Ciseaux" ET valeurOrdi = "Feuille" ALORS
     ECRIRE "Le gagnant est ", nom
 SINON
-    ECRIRE "Il y a égalité!"
+    ECRIRE "Il y égalité!"
 FINSI
 
 FIN
+
