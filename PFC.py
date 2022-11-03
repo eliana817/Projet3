@@ -62,15 +62,15 @@ def unJoueur(player) :
             player = False
             print("Vous avez quitté le jeu car vous n'avez pas répondu correctement")
             print("")
-            print("Score = {}({}) à {}({})".format(scorePlayer,player_name, scoreBOT, "BOT Chifoumi"))
+            print("Score = {} ({}) à {} ({})".format(scorePlayer,player_name, scoreBOT, "BOT Chifoumi"))
             return
 
     if scorePlayer > scoreBOT :
-        print("Score = {}({}) à {}({}). Vous avez gagné !".format(scorePlayer, player_name, scoreBOT,  "BOT Chifoumi"))
+        print("Score = {} ({}) à {} ({}). Vous avez gagné !".format(scorePlayer, player_name, scoreBOT,  "BOT Chifoumi"))
     elif scorePlayer < scoreBOT :
-        print("Score = {}({}) à {}({}). Vous avez perdu !".format(scorePlayer, player_name, scoreBOT, "BOT Chifoumi"))
+        print("Score = {} ({}) à {} ({}). Vous avez perdu !".format(scorePlayer, player_name, scoreBOT, "BOT Chifoumi"))
     else :
-        print("Egalité ! Score = {}({}) à {}({}).".format(scorePlayer, player_name, scoreBOT, "BOT Chifoumi")) 
+        print("Egalité ! Score = {} ({}) à {} ({}).".format(scorePlayer, player_name, scoreBOT, "BOT Chifoumi")) 
 
 unJoueur(player)
     
