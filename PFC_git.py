@@ -1,21 +1,37 @@
-import random
-import time
+from random import randint
 
-liste = ["Pierre", "Feuille", "Ciseaux"]
+list = ["Pierre", "Feuille", "Ciseaux"]
 
-nom = str(input("Entrez votre nom :\n"))
-print("")
+player_name = input('Quel est ton nom? ')
+computer_name = ("BOT Chifoumi")
 
-valeurJoueur = str(input("Entrez Pierre, Feuille ou Ciseaux :\n"))
-print("")
+computer = list[randint(0,2)]
 
-while valeurJoueur != "Pierre" and ValeurJoueur != "Feuille" and valeurJoueur != "Ciseaux" :
-    valeurJoueur = str(input("Soyez certain de bien entrer une de ces valeurs : Pierre, Feuille ou Ciseaux"))
-    print("")
+player = True
 
-print("{} joue contre ...".format(valeurJoueur))
-print("")
+while player == True :
+    player = input('Pierre, Feuille ou Ciseaux ? ')
+    if player == computer:
+        print("Egalité !")
+    elif player == "Pierre" :
+        if computer == "Feuille":
+            print("Tu as perdu !", computer_name, "a contré", player_name)
+        else :
+            print("Tu as gagné !", player_name, "a écrasé", computer_name)
+    elif player == "Feuille" :
+        if computer == "Ciseaux" :
+            print("You lose !", computer_name, "a découpé", player_name)
+        else :
+            print("You win!", computer_name, "a écrasé", player_name)
+    elif player == "Ciseaux":
+        if computer == "Pierre":
+            print("Tu as perdu...", player_name, "a écrasé", computer_name)
+        else :
+            print("Tu as gagné !", player_name, "a découpé", computer_name)
+    else :
+        print("Attention tu as mal fais ton choix, alors veuilles à bien écrire ce que tu souhaites jouer.")
 
-time.sleep(2)
-valeurOrdi = random.choice(liste)
-print(ValeurOrdi)
+
+    player = True
+    computer = list[randint(0,1)]
+
