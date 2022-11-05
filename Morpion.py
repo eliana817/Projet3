@@ -3,6 +3,7 @@ from curses import wrapper
 import sys
 import time
 
+
 print("Initialisation du jeu... ")
 
 #def main_s(screen_main) :
@@ -12,11 +13,14 @@ screen = curses.initscr()
 curses.curs_set(0)
 curses.mousemask(-1)
 curses.cbreak()
+curses.noecho()
 screen.keypad(1)
+
 
 rows, cols = screen.getmaxyx()
 
 listeMenu = ["Jouer", "Quitter"]
+MenuJouer = ["Rejouer", "Retour"]
 
 def centrex(cols, texte) :
     return (cols - len(texte)) // 2
@@ -24,11 +28,12 @@ def centrex(cols, texte) :
 def centrey(rows) :
     return rows//2
 
-def menuEtSelection(screen, indexSelection) :
+
+def menuEtSelection(screen, Selection) :
     screen.clear()
     for index, element in enumerate(listeMenu) :
         y = rows//2 + index
-        if index == indexSelection :
+        if index == Selection :
             screen.attron(curses.color_pair(2))
             screen.addstr(y, centrex(cols, element), element)
             #or screen.addstr(centrey(rows) + index, centrex(cols, element), element)
@@ -36,8 +41,21 @@ def menuEtSelection(screen, indexSelection) :
         else :
             screen.addstr(y, centrex(cols, element), element)
 
+def menuJouer(win, Select) :
+    win.clear()
+    for index, element in enumerate(MenuJouer) :
+        if index == Select :
+            win.attron(curses.color_pair(2))
+            win.addstr(centrey(rows)+index, 5, element)
+            win.attroff(curses.color_pair(2))
+        else :
+            win.addstr(centrey(rows) + index, 5, element)
+            
 
 def main(screen) :
+    
+    morpion = ["__  __                  _          ", "|  \/  | ___  _ __ _ __ (_) ___  _ __", " | |\/| |/ _ \| '__| '_ \| |/ _ \| '_ \ "," | |  | | (_) | |  | |_) | | (_) | | | |", "  |_|  |_|\___/|_|  | .__/|_|\___/|_| |_|", " |_|"]                
+    
 
     if (curses.has_colors() == True) :
         curses.start_color()
@@ -47,25 +65,53 @@ def main(screen) :
 
 
 
-    indexSelection = 0
-    menuEtSelection(screen, indexSelection)
+    Selection = 0 #index pour le menu principal
+    menuEtSelection(screen, Selection)
+    
     
     while True :
+
+
         key = screen.getch()
 
-        if key == curses.KEY_DOWN and indexSelection == 0 :
-            indexSelection = 1
-        elif key == curses.KEY_UP and indexSelection == 1 :
-            indexSelection = 0
+        if key == curses.KEY_DOWN and Selection == 0 :
+            Selection = 1
+        elif key == curses.KEY_UP and Selection == 1 :
+            Selection = 0
         elif key == curses.KEY_ENTER or key in [10, 13] :
-            if listeMenu[indexSelection] == "Jouer" :
+            if listeMenu[Selection] == "Jouer" :
                 screen.clear()
-                screen.addstr(2, centrex(cols, "Morpion"), "Morpion")
-                screen.refresh()
+                for i, ligne in enumerate(morpion) :
+                    screen.addstr(i, centrex(cols, ligne), ligne)
 
-                screen.getch()
+                
+                win = curses.newwin(20, 30, centrey(rows) - 10, 5)
+                win.keypad(1)
+                win.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)                
+                win.refresh()
+                screen.refresh()   
 
-            elif listeMenu[indexSelection] == "Quitter" :
+                Select = 0 #index pour le menu une fois dans le jeu
+
+                while True :
+
+                    menuJouer(win, Select)
+
+                    cle = win.getch()
+
+                    if cle == curses.KEY_DOWN and Select == 0 :
+                        Select = 1
+                    elif cle == curses.KEY_UP and Select == 1 :
+                        Select = 0
+                    elif cle == curses.KEY_ENTER or key in [10, 13] :
+                        if MenuJouer[Select] == "Retour" :
+                            #putChar(win, ' ')
+                            #win = None
+                            break
+                
+                
+
+            elif listeMenu[Selection] == "Quitter" :
                 screen.clear()
                 screen.addstr(centrey(rows), centrex(cols, "Vous allez quitter le jeu ..."), "Vous allez quitter le jeu ...")
                 screen.refresh()
@@ -73,7 +119,7 @@ def main(screen) :
                 
                 screen.endwin()
 
-        menuEtSelection(screen, indexSelection)
+        menuEtSelection(screen, Selection)
         screen.refresh()
 
 
