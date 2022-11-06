@@ -16,7 +16,6 @@ curses.cbreak()
 curses.noecho()
 screen.keypad(1)
 
-
 rows, cols = screen.getmaxyx()
 
 listeMenu = ["Jouer", "Quitter"]
@@ -41,15 +40,15 @@ def menuEtSelection(screen, Selection) :
         else :
             screen.addstr(y, centrex(cols, element), element)
 
-def menuJouer(win, Select) :
-    win.clear()
+def menuJouer(winHome, Select) :
+    winHome.clear()
     for index, element in enumerate(MenuJouer) :
         if index == Select :
-            win.attron(curses.color_pair(2))
-            win.addstr(centrey(rows)+index, 5, element)
-            win.attroff(curses.color_pair(2))
+            winHome.attron(curses.color_pair(2))
+            winHome.addstr(centrey(rows)+index, 5, element)
+            winHome.attroff(curses.color_pair(2))
         else :
-            win.addstr(centrey(rows) + index, 5, element)
+            winHome.addstr(centrey(rows) + index, 5, element)
             
 
 def main(screen) :
@@ -70,13 +69,14 @@ def main(screen) :
     
     
     while True :
-
+        
+        menuEtSelection(screen, Selection)
 
         key = screen.getch()
 
-        if key == curses.KEY_DOWN and Selection == 0 :
+        if (key == curses.KEY_DOWN  and Selection == 0) or (key == ord('s') and Selection == 0) :
             Selection = 1
-        elif key == curses.KEY_UP and Selection == 1 :
+        elif (key == curses.KEY_UP and Selection == 1) or (key == ord('z') and Selection == 1) :
             Selection = 0
         elif key == curses.KEY_ENTER or key in [10, 13] :
             if listeMenu[Selection] == "Jouer" :
@@ -85,30 +85,40 @@ def main(screen) :
                     screen.addstr(i, centrex(cols, ligne), ligne)
 
                 
-                win = curses.newwin(20, 30, centrey(rows) - 10, 5)
-                win.keypad(1)
-                win.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)                
-                win.refresh()
-                screen.refresh()   
+                winHome = curses.newwin(20, 30, centrey(rows) - 10, 5)
+                winHome.keypad(1)
+                winHome.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)                
+                winHome.refresh()
+                screen.refresh()  
+
+                winJeu = curses.newwin (25, 50, centrey(rows) - 10, 59)
+                winJeu.keypad(1)
+                winJeu.bkgd(' ', curses.color_pair(2) | curses.A_BOLD)
+                winJeu.refresh()
+                screen.refresh()
+
 
                 Select = 0 #index pour le menu une fois dans le jeu
 
                 while True :
 
-                    menuJouer(win, Select)
+                    menuJouer(winHome, Select)
 
-                    cle = win.getch()
+                    cle = winHome.getch()
 
-                    if cle == curses.KEY_DOWN and Select == 0 :
+                    if (cle == curses.KEY_DOWN and Select == 0) or (cle == ord('s') and Select == 0) :
                         Select = 1
-                    elif cle == curses.KEY_UP and Select == 1 :
+                    elif (cle == curses.KEY_UP and Select == 1) or (cle == ord('z') and Select == 1) :
                         Select = 0
                     elif cle == curses.KEY_ENTER or key in [10, 13] :
                         if MenuJouer[Select] == "Retour" :
                             #putChar(win, ' ')
                             #win = None
                             break
-                
+
+                    
+                        
+                                          
                 
 
             elif listeMenu[Selection] == "Quitter" :
@@ -119,7 +129,7 @@ def main(screen) :
                 
                 screen.endwin()
 
-        menuEtSelection(screen, Selection)
+        #menuEtSelection(screen, Selection)
         screen.refresh()
 
 
