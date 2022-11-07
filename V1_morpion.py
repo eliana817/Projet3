@@ -19,22 +19,41 @@ morpion = [
 for k in range(len(morpion)) :
     print(morpion[k])
 
-symboles = ["X", "O"]
+
+#symboles = ["X", "O"]
 nondispo = []
-BOT = []
-Joueur = []
+BOT = [] #correspond à la liste contenant les coordonnées du symbole du joueur 2 dans le tableau quand il y a 2 joueur, sinon cela correspond aux coordonnées des symboles du BOT
+Joueur = [] #correspond à la liste contenant les coordonnées de symbole du jouer 1 dans le tableay quand il n'y a qu'un seul joueur, sinon cela correspond aux coordonnées de l'unique joueur jouant contre le BOT 
 
-print("")
-syjoueur = str(input("Entrez si vous voulez être 'X' ou 'O' :\n"))
-
-while syjoueur != "X" and syjoueur != "O" :
-    syjoueur = str(input("Entrez 'X' ou 'O' :\n"))
+def UnJoueur() :
     print("")
+    syjoueur = str(input("Entrez si vous voulez être 'X' ou 'O' :\n"))
 
-if syjoueur == "X" :
-    syBOT = "O"
-else : 
-    syBOT = "X"
+    while syjoueur != "X" and syjoueur != "O" :
+        syjoueur = str(input("Entrez 'X' ou 'O' :\n"))
+        print("")
+
+    if syjoueur == "X" :
+        syBOT = "O"
+    else : 
+        syBOT = "X"
+    
+    return syjoueur, syBOT
+
+def DeuxJoueur() :
+    print("")
+    syJ1 = str(input("Joueur 1, entrez si vous voulez être 'X' ou 'O':\n"))
+
+    while syJ1 != "X" and syJ1 != "O" :
+        syJ1 = str(input("Entrez 'X' ou 'O' :\n"))
+        print("")
+
+    if syJ1 == "X" :
+        syJ2 = "O"
+    else :
+        syJ2 = "X"
+
+    return syJ1, syJ2
 
 def coordjoueur(nondispo, Joueur) :
 
@@ -76,6 +95,7 @@ def coordBOT(nondispo, BOT) :
 
     nondispo.append(choixBOT)
     BOT.append(choixBOT)
+    
 
     return x, y, nondispo, BOT
 
@@ -94,15 +114,15 @@ def affichage(morpion, syjoueur, x, y) :
 
 def avantageJ(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2) :
 
-    totalCol =0
+    totalCol = 0
     totalLine = 0
 
-    for k in range (2) :
+    for k in range (3) :
         ColCount = OccJoueurCol.count(k)
         if totalCol < ColCount :
             totalCol = ColCount
 
-    for i in range (2) :
+    for i in range (3) :
         LineCount = OccJoueurLine.count(i)
         if totalLine < LineCount :
             totalLine = LineCount
@@ -118,15 +138,15 @@ def avantageJ(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2) :
 
 def avantageB(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2) :
 
-    totalCol =0
+    totalCol = 0
     totalLine = 0
 
-    for k in range (2) :
+    for k in range (3) :
         ColCount = OccBOTCol.count(k)
         if totalCol < ColCount :
             totalCol = ColCount
 
-    for i in range (2) :
+    for i in range (3) :
         LineCount = OccBOTLine.count(i)
         if totalLine < LineCount :
             totalLine = LineCount
@@ -140,9 +160,9 @@ def avantageB(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2) :
     return avantageBOT
 
 
-def tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, nondispo, Joueur, syjoueur, morpion) :
+def tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syjoueur, morpion, J) :
     print("")
-    print("C'est à vous !")
+    print("C'est à vous {} !".format(J))
     print("")
     x, y, nondispo, Joueur = coordjoueur(nondispo, Joueur)
     morpion = affichage(morpion, syjoueur, x, y)
@@ -163,13 +183,19 @@ def tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avan
 
 
 
-def tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion) :
+def tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion, J) :
     print("")
-    print("C'est au tour du BOT : ")
+    print("C'est au tour du/de {} : ".format(J))
     print("")
-    x, y, nondispo, BOT = coordBOT(nondispo, BOT)
-    morpion = affichage(morpion, syBOT, x, y)
-    tour += 1
+    if J == "BOT" :
+        x, y, nondispo, BOT = coordBOT(nondispo, BOT)
+        morpion = affichage(morpion, syBOT, x, y)
+        tour += 1
+    else :
+        x, y, nondispo, BOT = coordjoueur(nondispo, BOT)
+        morpion = affichage(morpion, syBOT, x, y)
+        tour += 1
+
     for i in range (len(BOT)) :
         OccBOTCol.append(BOT[i][0])
         OccBOTLine.append(BOT[i][1])
@@ -180,13 +206,35 @@ def tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, 
         elif BOT[i] == (0,2) or BOT[i] == (2,0) :
             OccBOTDiag2 += 1
 
-    avantageBOT = avantageB(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2) 
+    avantageBOT = avantageB(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2)
 
     return avantageBOT, tour, BOT, nondispo, morpion
 
+print("")
+mode = str(input("Selectionnez votre mode : un joueur = 1 ou deux joueur = 2 :\n"))
+print("")
 
-avantageJoueur = 0
-avantageBOT = 0
+if mode != "1" and mode != "2" :
+    print("")
+    mode = str(input("Veuillez entrer soit 1, soit 2 :\n"))
+
+if mode == "1" :
+    syjoueur, syBOT = UnJoueur()
+    print("")
+    J1 = str(input("Entrer votre nom :\n"))
+    print("")
+    J2 = "BOT"
+else :
+    syJ1, syJ2 = DeuxJoueur()
+    print("")
+    J1 = str(input("Entrer le nom du joueur 1 :\n"))
+    print("")
+    J2 = str(input("Entrer le nom du joueur 2 :\n"))
+    print("")
+
+
+avantageJoueur = 0 #aussi avantage du joueur 1 quand on joue à deux
+avantageBOT = 0 #aussi avantage du joueur 2 quand il y en a un
 
 tour = 0
 
@@ -203,27 +251,62 @@ while avantageJoueur < 3 and avantageBOT < 3 and tour < 9:
     OccBOTDiag1 = 0
     OccBOTDiag2 = 0
 
-    if commence == 0 :
-        avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syjoueur, morpion)
+    if mode == "1" :
+        if commence == 0 :
+            avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syjoueur, morpion, J1)
+
+            if avantageJoueur == 3 or tour == 9 :
+                break
      
-        avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion)
+            avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion, J2)
 
-    else :
-        avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion)
-        
-        avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syjoueur, morpion)
-        
-    
+        else :
+            avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syBOT, morpion, J2)
 
-if tour == 9 :
+            if avantageBOT == 3 or tour == 9 :
+                break
+        
+            avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syjoueur, morpion, J1)
+
+    elif mode == "2" :
+        if commence == 0 :
+            avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syJ1, morpion, J1)
+
+            if avantageJoueur == 3 or tour == 9 :
+                break
+        
+            avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syJ2, morpion, J2)
+
+        else :
+            avantageBOT, tour, BOT, nondispo, morpion = tourBOT(OccBOTCol, OccBOTLine, OccBOTDiag1, OccBOTDiag2, avantageBOT, tour, BOT, nondispo, syJ2, morpion, J2)
+
+            if avantageBOT == 3 or tour == 9 :
+                break
+
+            avantageJoueur, tour, Joueur, nondispo, morpion = tourJoueur(OccJoueurCol, OccJoueurLine, OccJoueurDiag1, OccJoueurDiag2, avantageJoueur, tour, Joueur, nondispo, syJ1, morpion, J1)
+            
+        
+ 
+
+if avantageBOT == 3 :
+    if mode == "1" :
+        print("")
+        print("Vous avez perdu !")
+    elif  mode == "2" :
+        print("")
+        print("Bien joué {} ! Vous avez gagné !".format(J2))
+
+elif avantageJoueur == 3 :
+    if mode == "1" :
+        print("")
+        print("Bien joué {} ! Vous avez gagné !".format(J1))
+    elif mode == "2" :
+        print("")
+        print("Bien joué {} ! \nVous avez gagné !".format(J1))
+
+elif tour == 9 :
     print("")
     print("Egalité !")
-elif avantageBOT > avantageJoueur :
-    print("")
-    print("Vous avez perdu !")
-elif avantageJoueur > avantageBOT :
-    print("")
-    print("Vous avez gagné !")
 
 
 
