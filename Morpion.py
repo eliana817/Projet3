@@ -49,7 +49,53 @@ def menuJouer(winHome, Select) :
             winHome.attroff(curses.color_pair(2))
         else :
             winHome.addstr(centrey(rows) + index, 5, element)
-            
+
+def affichage(screen) :
+
+    case1 = curses.newwin(7, 14, centrey(rows) - 9, 61)
+    case1.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case1.refresh()
+    screen.refresh()
+
+    case2 = curses.newwin(7, 14, centrey(rows) - 9, 61 + 16)
+    case2.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case2.refresh()
+    screen.refresh()
+
+    case3 = curses.newwin(7, 14, centrey(rows) - 9, 61 + 32)
+    case3.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case3.refresh()
+    screen.refresh()
+   
+    case4 = curses.newwin(7, 14, centrey(rows) - 1, 61)
+    case4.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case4.refresh()
+    screen.refresh()
+
+    case5 = curses.newwin(7, 14, centrey(rows) - 1, 61 + 16)
+    case5.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case5.refresh()
+    screen.refresh()
+
+    case6 = curses.newwin(7, 14, centrey(rows) - 1, 61 + 32)
+    case6.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case6.refresh()
+    screen.refresh()
+
+    case7 = curses.newwin(7, 14, centrey(rows) + 7, 61)
+    case7.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case7.refresh()
+    screen.refresh()
+   
+    case8 = curses.newwin(7, 14, centrey(rows) + 7, 61 + 16)
+    case8.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case8.refresh()
+    screen.refresh()
+  
+    case9 = curses.newwin(7, 14, centrey(rows) + 7, 61 + 32)
+    case9.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+    case9.refresh()
+    screen.refresh()
 
 def main(screen) :
     
@@ -96,6 +142,8 @@ def main(screen) :
                 winJeu.bkgd(' ', curses.color_pair(2) | curses.A_BOLD)
                 winJeu.refresh()
                 screen.refresh()
+
+                grille = affichage(screen)
 
 
                 Select = 0 #index pour le menu une fois dans le jeu
