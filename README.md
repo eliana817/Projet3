@@ -1,2 +1,1 @@
-# Projet3
-Programme du morpion
+# Morpion
