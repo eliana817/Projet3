@@ -1,6 +1,6 @@
 from random import randint
 
-list = ["Pierre", "Feuille", "Ciseaux"]
+list = ["Pierre", "Feuille", "Ciseaux", "Rock"]
 
 player_name=input('Quel est ton nom ? ')
 print("")
@@ -8,24 +8,30 @@ computer_name=("BOT Chifoumi")
 
 player = True
 
-def unJoueur(player) :
+def unJoueur(player) : 
     score_BOT = 0
     score_Player = 0
     while player == True:
         computer = list[randint(0,2)]
         player = input('Pierre, Feuille ou Ciseaux ? ')
         print("")
+
         if player == computer:
             print("BOT Chifoumi a joué {}".format(computer))
             print("")
             print("Egalité ! Le BOT Chifoumi a pensé comme toi !")
             print("")
+        elif player == "Rock" : 
+            print("Tu as gagné !", player_name, "a écrasé totalement", computer_name)
+            print("")
+            score_Player += 1
         elif player == "Pierre" or player == "pierre":
             if computer == "Feuille":
                 print("BOT Chifoumi a joué {}".format(computer))
                 print("")
                 print("Tu as perdu !", computer_name, "a contré", player_name)
-                print("")
+                print("Think about use a Rock not a Pierre")
+                print("")   
                 score_BOT += 1
             else:
                 print("BOT Chifoumi a joué {}".format(computer))
@@ -85,6 +91,11 @@ def unJoueur(player) :
         print("Egalité ! Score = {}({}) à {}({}).".format(score_Player, player_name, score_BOT, "BOT Chifoumi")) 
 
 unJoueur(player)
+    
+    
+
+
+
     
     
 
